@@ -5,66 +5,37 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
 
-string a[4];
-string b[4];
-string a2[4];
-string b2[4];
+int n, m, c;
+int p[200001], rk[200001];
 
-bool check() {
-    for (int i = 0; i < 4; i++) {
-        if (a[i] != b[i]) return false;
-    }
-
-    return true;
+int find(int x) {
+    if (x != p[x]) return p[x] = find(p[x]);
+    return p[x];
 }
 
-void rot(int skip) {
-    int cur = (skip+1)%4;
-    string tmp = b[cur];
-    cur = (cur+1)%4;
-    while (cur != skip) {
-        string t = b[cur];
-        b[cur] = tmp;
-        tmp = t;
-        cur = (cur+1)%4;
-    }
-
-    b[(skip+1)%4] = tmp;
+bool merge(int a, int b) {
+    int r1 = find(a);
+    int r2 = find(b);
+    if(r1 == r2) return false;
+    if (rk[r1] > rk[r2]) p[r2] = r1;
+    else p[r1] = r2;
+    if (rk[r1] == rk[r2]) rk[r2]++;
+    return true;
 }
 
 int main() {
     cin.sync_with_stdio(0);
     cin.tie(0);
-    for (int i = 0; i < 4; i++) {
-        cin >> a[i];
-        a2[i] = a[i];
-    }
-    for (int i = 0; i < 4; i++) {
-        cin >> b[i];
-        b2[i] = b[i];
-    }
-
-    sort(a2, a2+4);
-    sort(b2, b2+4);
-    for (int i = 0; i < 4; i++) {
-        if (a2[i] != b2[i]) {
-            cout << "NO\n";
-            return 0;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) p[i] = i;
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b;
+        if (!merge(a, b)) {
+            c++;
         }
     }
 
-    for (int k = 0; k < 4; k++) {
-        for (int j = 0; j < 4; j++) {
-            rot(k);
-            for (int i = 0; i < 3; i++) {
-                rot(j);
-                if (check()) {
-                    cout << "NO\n";
-                    return 0;
-                }
-            }
-        }
-    }
-
-    cout << "YES\n";
+    if (c <= 1) cout << "YES\n";
+    else cout << "NO\n";
 }
