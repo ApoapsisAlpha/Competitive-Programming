@@ -4,36 +4,43 @@ using namespace std;
 typedef long long ll;
 
 int n;
-string a, b;
+string s;
+bool a[200001];
+bool b[200001];
 
 int main() {
     cin >> n;
-    cin >> a;
-    cin >> b;
-    if (a == b) {
-        cout << "YES";
+    cin >> s;
+    for (int i = 1; i <= n; i++) {
+        a[i] = s[i-1] == 'F';
+    }
+    cin >> s;
+    for (int i = 1; i <= n; i++) {
+        b[i] = s[i-1] == 'F';
+    }
+
+    int x = 1;
+    for (int i = 1; i < n; i++) {
+        if (x < i) x = i;
+        if (a[i] != b[i]) {
+            while (x < n) {
+                if (a[x] == a[x+1]) {
+                    a[x+1] = !a[x+1];
+                    break;
+                }
+                x++;
+            }
+            if (x == n) {
+                cout << "NO";
+                return 0;
+            }
+        }
+    }
+
+    if (a[n] != b[n]) {
+        cout << "NO";
     }
     else {
-        bool x = true;
-        int fa = 0, aa = 0, fb = 0, ab = 0;
-        for (int i = 0; i < n-1; i++) {
-            if (a[i] == a[i+1]) x = false;
-        }
-        for (int i = 0; i < n; i++) {
-            if (a[i] == 'F') fa++;
-            else aa++;
-        }
-        for (int i = 0; i < n; i++) {
-            if (b[i] == 'F') fb++;
-            else ab++;
-        }
-
-        if (x) {
-            cout << "NO";
-        }
-        else {
-            if (fa%2 == fb%2 && aa%2 == ab%2) cout << "YES";
-            else cout << "NO";
-        }
+        cout << "YES";
     }
 }
