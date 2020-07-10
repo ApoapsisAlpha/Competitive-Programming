@@ -5,21 +5,19 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 
-ll n;
+const int mod = 1e9 + 7;
+int n, ans;
 
 int main() {
     cin.sync_with_stdio(0);
     cin.tie(0);
     cin >> n;
-    cout << n << " ";
-    while (n != 1) {
-        if (n&1) {
-            n *= 3;
-            n++;
-        }
-        else {
-            n >>= 1;
-        }
-        cout << n << " ";;
+    ans = 1;
+    for (int i = 0; i < n; i++) {
+        ans <<= 1;
+        if (ans > mod) ans -= mod;
     }
+
+    cout << ans << "\n";
 }
+

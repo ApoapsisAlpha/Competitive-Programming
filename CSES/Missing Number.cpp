@@ -5,21 +5,21 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 
-ll n;
+int n;
 
 int main() {
     cin.sync_with_stdio(0);
     cin.tie(0);
     cin >> n;
-    cout << n << " ";
-    while (n != 1) {
-        if (n&1) {
-            n *= 3;
-            n++;
-        }
-        else {
-            n >>= 1;
-        }
-        cout << n << " ";;
+    int x1 = 0;
+    int x2 = n;
+    for (int i = 1; i <= n-1; i++) {
+        int a;
+        cin >> a;
+        x1 ^= a;
+        x2 ^= i;
     }
+
+    cout << (x1 ^ x2) << "\n";
 }
+

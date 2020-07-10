@@ -5,21 +5,21 @@ typedef long long ll;
 typedef pair<int, int> pii;
 typedef pair<int, pii> piii;
 
-ll n;
+int n;
+ll ans, cur;
 
 int main() {
     cin.sync_with_stdio(0);
     cin.tie(0);
     cin >> n;
-    cout << n << " ";
-    while (n != 1) {
-        if (n&1) {
-            n *= 3;
-            n++;
-        }
-        else {
-            n >>= 1;
-        }
-        cout << n << " ";;
+    ans = -1e18;
+    for (int i = 0; i < n; i++) {
+        ll x;
+        cin >> x;
+        cur = max(cur+x, x);
+        ans = max(ans, cur);
     }
+
+    cout << ans << "\n";
 }
+
